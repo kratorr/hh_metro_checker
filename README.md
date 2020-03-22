@@ -27,9 +27,9 @@ $ python3 main.py
 
 ### Request
 
-`POST /api/v1/metro/`
+`POST /api/v1/metro/verificate/`
 
-    curl --location --request POST 'http://localhost:8000/api/v1/metro/'--header 'Content-Type: text/plain' --data-raw '["Каховская","Баррикадная", "несуществует"]'
+    curl --location --request POST 'http://localhost:8000/api/v1/metro/verificate/'--header 'Content-Type: text/plain' --data-raw '["Каховская","Баррикадная", "несуществует"]'
 
 ### Response
 

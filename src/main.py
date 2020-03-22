@@ -54,5 +54,5 @@ async def api(request):
 
 if __name__ == '__main__':
     app = web.Application() 
-    app.router.add_post('/api/v1/metro', api)
+    app.router.add_post('/api/v1/metro/verificate', api)
     web.run_app(app, host='localhost', port=8000)
