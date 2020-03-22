@@ -29,8 +29,7 @@ $ python3 main.py
 
 `POST /api/v1/metro/`
 
-    curl --location --request POST 'http://localhost:8000/api/v1/metro/'--header 
-    \'Content-Type: text/plain' --data-raw '["Каховская","Баррикадная", "несуществует"]'
+    curl --location --request POST 'http://localhost:8000/api/v1/metro/'--header 'Content-Type: text/plain' --data-raw '["Каховская","Баррикадная", "несуществует"]'
 
 ### Response
 
