@@ -1,6 +1,4 @@
 from aiohttp import web, ClientSession
-import aiohttp
-import asyncio
 import json
 
 
@@ -17,22 +15,16 @@ def get_stations_set(api_stations):
 
 def verificate_stations(input_stations,api_stations):
     result = {	
-        'unchanged': [],
-        'update': [],
+        'unchanged': list(input_stations.intersection(api_stations)),
+        'update': list(input_stations.difference(api_stations)),
         'deleted': list(api_stations.difference(input_stations))
     }
-
-    for station in input_stations:
-        if station in api_stations:
-            result['unchanged'].append(station)
-        else:
-            result['update'].append(station)
     return result
-
+    
 
 async def get_api_stations():
     try:
-        async with aiohttp.ClientSession() as session:
+        async with ClientSession() as session:
             async with session.get(API_URL) as resp:
                 response = await resp.json()
         return response
