@@ -23,8 +23,6 @@ $ python3 main.py
 
 # Как использовать
 
-## Создать здание
-
 ### Request
 
 `POST /api/v1/metro/verificate/`

@@ -1,8 +1,30 @@
-from aiohttp import web, ClientSession
 import json
+
+from datetime import datetime, timedelta
+from functools import wraps
+
+from aiohttp import web, ClientSession
+
 
 
 API_URL = 'https://api.hh.ru/metro/1'
+
+
+def cache(ttl):
+    cache_dict = {}
+    def decorator(func):
+        async def wrapper():
+            if 'response' in cache_dict:
+                delta = (datetime.now() - cache_dict['response']['time']).total_seconds()
+                if delta > ttl:
+                    result = await func()
+                    cache_dict['response'] = {'data': result , 'time': datetime.now()}
+            else:
+                result = await func()
+                cache_dict['response'] = {'data': result , 'time': datetime.now()}
+            return cache_dict['response']['data']
+        return wrapper
+    return decorator
 
 
 def get_stations_set(api_stations):
@@ -20,8 +42,9 @@ def verificate_stations(input_stations,api_stations):
         'deleted': list(api_stations.difference(input_stations))
     }
     return result
-    
 
+
+@cache(ttl=600)
 async def get_api_stations():
     try:
         async with ClientSession() as session:
