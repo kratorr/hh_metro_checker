@@ -10,7 +10,7 @@ from aiohttp import web, ClientSession
 API_URL = 'https://api.hh.ru/metro/1'
 
 
-def cache(ttl):
+def cache(ttl :int):
     cache_dict = {}
     def decorator(func):
         async def wrapper():
@@ -27,7 +27,7 @@ def cache(ttl):
     return decorator
 
 
-def get_stations_set(api_stations):
+def get_stations_set(api_stations: dict) -> set:
     stations = set()
     for line in api_stations['lines']:
         for station in line['stations']:
@@ -35,7 +35,7 @@ def get_stations_set(api_stations):
     return stations
 
 
-def verificate_stations(input_stations,api_stations):
+def verificate_stations(input_stations: set, api_stations: set) -> dict:
     result = {	
         'unchanged': list(input_stations.intersection(api_stations)),
         'update': list(input_stations.difference(api_stations)),
